@@ -1,0 +1,189 @@
+﻿@*
+    ViewData["Title"] = "Charts";
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Our Website Data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .header-charts {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center; /* Center-align all content within the header */
+        }
+
+        
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px; /* Ensure spacing between title and button */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Title and Back Button -->
+    <header class="header-charts">
+        <h1>Our Website Data</h1>
+        <!-- Back Button below the title -->
+
+    </header>
+ 
+    <!-- Itinerary Usage Chart Container -->
+    <div style="width: 80%; height: 400px; margin: auto;">
+        <canvas id="itineraryUsageChart"></canvas> <!-- Canvas element for Itinerary Usage -->
+    </div>
+
+    <!-- Destination Requests Chart Container -->
+    <div style="width: 80%; height: 400px; margin: auto; margin-top: 30px;">
+        <canvas id="destinationRequestsChart"></canvas> <!-- Canvas element for Destination Requests -->
+    </div>
+    <div style="width: 80%; height: 400px; margin: auto;">
+        <canvas id="costRangeRequestsChart"></canvas> <!-- Canvas element for the chart -->
+    </div>
+
+
+    <!-- Script to Initialize the Charts -->
+    <script>
+
+        //Chart created by Sonu Kanna
+        // Data for Itinerary Usage Chart
+        const itineraryData = [
+            { "category": "Requesting New Itinerary", "users": 55 },
+            { "category": "Using Existing Itinerary", "users": 45 }
+        ];
+
+        // Create Itinerary Usage Chart
+        const ctx1 = document.getElementById('itineraryUsageChart').getContext('2d');
+        const itineraryUsageChart = new Chart(ctx1, {
+            type: 'bar', // Chart type
+            data: {
+                labels: itineraryData.map(data => data.category), // Chart labels
+                datasets: [{
+                    label: 'Number of Users', // Dataset label
+                    data: itineraryData.map(data => data.users), // Dataset data
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Background color
+                    borderColor: 'rgba(54, 162, 235, 1)', // Border color
+                    borderWidth: 1 // Border thickness
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true, // Start y-axis at zero
+                        ticks: {
+                            stepSize: 10 // Step size for ticks
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true // Display the legend
+                    }
+                },
+                responsive: true, // Enable responsiveness
+                maintainAspectRatio: false // Adjust aspect ratio
+            }
+        });
+        //Chart created by Pranathi Cheemarla
+
+        // Data for Destination Requests Chart
+        const destinationData = ["New York", "Miami", "Los Angeles", "Paris", "Tokyo", "Other Locations"];
+        const requestCounts = [80, 75, 70, 65, 60, 50];
+
+        // Create Destination Requests Chart
+        const ctx2 = document.getElementById('destinationRequestsChart').getContext('2d');
+        const destinationRequestsChart = new Chart(ctx2, {
+            type: 'bar', // Chart type
+            data: {
+                labels: destinationData, // Chart labels
+                datasets: [{
+                    label: 'Number of Requests', // Dataset label
+                    data: requestCounts, // Dataset data
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Background color
+                    borderColor: 'rgba(255, 99, 132, 1)', // Border color
+                    borderWidth: 1 // Border thickness
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 2000, // Animation duration in milliseconds
+                    easing: 'easeInOutQuart', // Easing for animation
+                    onComplete: function () {
+                        console.log("Animation complete!"); // Log message on completion
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true, // Start y-axis at zero
+                        ticks: {
+                            stepSize: 10 // Step size for ticks
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true // Display the legend
+                    }
+                },
+                responsive: true, // Enable responsiveness
+                maintainAspectRatio: false // Keep aspect ratio flexible
+            }
+        });
+
+        //Chart developed by  Mani Kanta yaswanth
+        const costRangeData = ["Below $1000", "$1000 to $2500", "Above $2500"]; // Labels for the cost ranges
+        const requestCounts02 = [65, 25, 10]; // Number of requests for each range
+
+        // Create the bar chart for cost range requests
+        const ctx02 = document.getElementById('costRangeRequestsChart').getContext('2d'); // Get the context
+        const costRangeRequestsChart = new Chart(ctx02, {
+            type: 'bar', // Bar chart type
+            data: {
+                labels: costRangeData, // Chart labels
+                datasets: [{
+                    label: 'Number of Requests', // Dataset label
+                    data: requestCounts02, // Dataset data
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)', // Light teal for "Below $1000"
+                        'rgba(255, 206, 86, 0.2)', // Light yellow for "$1000 to $2500"
+                        'rgba(255, 99, 132, 0.2)'  // Light red for "Above $2500"
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)', // Dark teal border for "Below $1000"
+                        'rgba(255, 206, 86, 1)', // Dark yellow border for "$1000 to $2500"
+                        'rgba(255, 99, 132, 1)'  // Dark red border for "Above $2500"
+                    ],
+                    borderWidth: 1 // Border thickness
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true, // Ensure the y-axis starts at zero
+                        ticks: {
+                            stepSize: 10 // Adjust step size for better readability
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true // Display the legend
+                    }
+                },
+                responsive: true, // Enable responsive behavior
+                maintainAspectRatio: false // Maintain aspect ratio
+            }
+        });
+
+
+
+    </script>
+
+</body>
+</html>
